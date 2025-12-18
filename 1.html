@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>洪兴帮派 - 忠义千秋 兄弟同行</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", "黑体", sans-serif;
+        }
+
+        /* 背景层 - 强化黑色系压迫感 */
+        body {
+            background: url("./default.jpeg") no-repeat center center fixed;
+            background-size: cover;
+            background-color: #000;
+            color: #fff;
+            position: relative;
+            line-height: 1.7;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.85) 100%);
+            z-index: -1;
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 顶部LOGO/标题区 */
+        .header-banner {
+            text-align: center;
+            padding: 50px 0;
+            border-bottom: 3px solid #e50914;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .header-banner h1 {
+            font-size: 5rem;
+            color: #e50914;
+            text-shadow: 0 0 20px #e50914, 0 0 40px #000;
+            letter-spacing: 8px;
+            font-weight: 900;
+        }
+
+        .header-banner .slogan {
+            font-size: 1.3rem;
+            color: #ccc;
+            margin-top: 15px;
+            letter-spacing: 3px;
+        }
+
+        /* 侧边固定导航（新目录形式） */
+        .sidebar-nav {
+            position: fixed;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            z-index: 999;
+            background: rgba(10, 10, 10, 0.95);
+            border-radius: 10px;
+            padding: 20px 0;
+            border-left: 4px solid #e50914;
+        }
+
+        .sidebar-nav h3 {
+            text-align: center;
+            color: #e50914;
+            font-size: 1.2rem;
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #333;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+            padding: 10px 0;
+        }
+
+        .sidebar-nav li a {
+            display: block;
+            padding: 12px 30px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .sidebar-nav li a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 0;
+            height: 2px;
+            background: #e50914;
+            transform: translateY(-50%);
+            transition: width 0.3s ease;
+        }
+
+        .sidebar-nav li a:hover {
+            color: #e50914;
+            padding-left: 35px;
+        }
+
+        .sidebar-nav li a:hover::after {
+            width: 8px;
+        }
+
+        /* 内容区块通用样式 */
+        .content-section {
+            max-width: 1000px;
+            margin: 0 auto 80px;
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            color: #e50914;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .content-section h2::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 80px;
+            height: 4px;
+            background: #e50914;
+            border-radius: 2px;
+        }
+
+        /* 帮派介绍区块 */
+        .gang-intro p {
+            font-size: 1.2rem;
+            color: #eee;
+            margin-bottom: 20px;
+            text-indent: 2em;
+        }
+
+        .gang-intro .core-value {
+            margin-top: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .gang-intro .value-item {
+            flex: 1 1 200px;
+            background: rgba(229, 9, 20, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e50914;
+        }
+
+        .gang-intro .value-item h4 {
+            color: #e50914;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        /* 日常照片区块（优化布局） */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .photo-card {
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.5s ease;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            filter: grayscale(10%) contrast(1.2) brightness(0.85);
+            transition: filter 0.5s ease;
+        }
+
+        .photo-card .photo-desc {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            padding: 20px 15px;
+            color: #fff;
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(229, 9, 20, 0.3);
+        }
+
+        .photo-card:hover img {
+            filter: grayscale(0%) contrast(1.3) brightness(0.95);
+        }
+
+        .photo-card:hover .photo-desc {
+            transform: translateY(0);
+        }
+
+        /* 欢迎加入区块（强化氛围感） */
+        .join-section {
+            background: linear-gradient(45deg, rgba(229, 9, 20, 0.2), rgba(0, 0, 0, 0.8));
+            border: 2px solid #e50914;
+            text-align: center;
+        }
+
+        .join-section p {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 25px;
+        }
+
+        .join-section .call-action {
+            font-size: 1.8rem;
+            color: #e50914;
+            font-weight: bold;
+            margin: 30px 0;
+            text-shadow: 0 0 10px #000;
+        }
+
+        /* 帮派信息卡片（优化排版） */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .info-card {
+            background: rgba(10, 10, 10, 0.8);
+            padding: 30px 20px;
+            border-radius: 10px;
+            text-align: center;
+            border-top: 3px solid #e50914;
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(229, 9, 20, 0.2);
+        }
+
+        .info-card h4 {
+            font-size: 1.4rem;
+            color: #e50914;
+            margin-bottom: 15px;
+        }
+
+        .info-card p {
+            font-size: 1.1rem;
+            color: #eee;
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 1rem;
+            margin-top: 50px;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 992px) {
+            .sidebar-nav {
+                position: static;
+                transform: none;
+                max-width: 100%;
+                margin: 0 auto 40px;
+                display: block;
+            }
+
+            .header-banner h1 {
+                font-size: 3.5rem;
+            }
+
+            .content-section {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header-banner h1 {
+                font-size: 2.5rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .photo-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- 顶部Banner -->
+        <header class="header-banner">
+            <h1>洪 兴</h1>
+            <p class="slogan">忠义为本 · 兄弟为魂 · 洪兴不败 · 千秋万代</p>
+        </header>
+
+        <!-- 侧边导航（新目录） -->
+        <nav class="sidebar-nav">
+            <h3>洪兴导航</h3>
+            <ul>
+                <li><a href="#gang-intro">帮派介绍</a></li>
+                <li><a href="#daily-photos">日常风采</a></li>
+                <li><a href="#join-us">加入我们</a></li>
+                <li><a href="#gang-info">核心信息</a></li>
+            </ul>
+        </nav>
+
+        <!-- 帮派介绍区块 -->
+        <section id="gang-intro" class="content-section gang-intro">
+            <h2>帮派介绍</h2>
+            <p>洪兴，起于市井，立于忠义，纵横一方数十载，凭的是兄弟同心，守的是江湖道义。由创始人浩南一手建立，以「忠、义、勇、谋」为立帮之本，聚四方豪杰，结八拜之交，不求扬名立万，但求兄弟不散。</p>
+            <p>我们不恃强凌弱，亦不惧强权压迫；不贪非分之财，亦不负兄弟之情。入洪兴，即为家人，有福同享，有难同当，刀山火海，不离不弃。</p>
+            <p>如今洪兴立足771右侧，势力日盛，然初心不改：以义聚人，以信立世，以勇行事，以谋安帮。凡重情重义、敢作敢为者，皆可为我洪兴兄弟！</p>
+
+            <div class="core-value">
+                <div class="value-item">
+                    <h4>忠</h4>
+                    <p>忠于帮派，忠于兄弟，不负初心</p>
+                </div>
+                <div class="value-item">
+                    <h4>义</h4>
+                    <p>义字当先，恩怨分明，有诺必践</p>
+                </div>
+                <div class="value-item">
+                    <h4>勇</h4>
+                    <p>勇闯敢拼，不畏强敌，遇事不退</p>
+                </div>
+                <div class="value-item">
+                    <h4>谋</h4>
+                    <p>谋定后动，审时度势，稳扎稳打</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 日常照片区块 -->
+        <section id="daily-photos" class="content-section">
+            <h2>日常风采</h2>
+            <div class="photo-gallery">
+                <div class="photo-card">
+                    <img src="./20211022225358_2e560.webp" alt="洪兴兄弟聚首">
+                    <div class="photo-desc">
+                        <h4>兄弟聚首</h4>
+                        <p>洪兴核心兄弟议事，共商发展大计</p>
+                    </div>
+                </div>
+                <div class="photo-card">
+                    <img src="./d5c3461ff525ca0083de437f64469bd9_3405934502756695076.jpg" alt="团队出征">
+                    <div class="photo-desc">
+                        <h4>团队出征</h4>
+                        <p>洪兴兄弟齐出，气势如虹震四方</p>
+                    </div>
+                </div>
+                <div class="photo-card">
+                    <img src="./default.jpeg" alt="沙场并肩">
+                    <div class="photo-desc">
+                        <h4>沙场并肩</h4>
+                        <p>并肩作战，生死与共，洪兴无懦夫</p>
+                    </div>
+                </div>
+                <div class="photo-card">
+                    <img src="./R-C.jpg" alt="庆功宴饮">
+                    <div class="photo-desc">
+                        <h4>庆功宴饮</h4>
+                        <p>功成举杯，共享荣光，兄弟情更浓</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 欢迎加入区块 -->
+        <section id="join-us" class="content-section join-section">
+            <h2>欢迎加入</h2>
+            <p>江湖路远，独行难走；洪兴门开，兄弟相候！</p>
+            <p>无论你是初入江湖的新人，还是久经沙场的老将，只要你重情重义、守诺守信，</p>
+            <p>洪兴的大门永远为你敞开！</p>
+            <p class="call-action">加入洪兴，从此不再独行！</p>
+            <p>与浩南一同，共创洪兴新辉煌！</p>
+        </section>
+
+        <!-- 核心信息区块 -->
+        <section id="gang-info" class="content-section">
+            <h2>核心信息</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>创始人</h4>
+                    <p>浩南</p>
+                </div>
+                <div class="info-card">
+                    <h4>帮派地址</h4>
+                    <p>771右边</p>
+                </div>
+                <div class="info-card">
+                    <h4>游戏联系</h4>
+                    <p>9077110035</p>
+                </div>
+                <div class="info-card">
+                    <h4>QQ联系</h4>
+                    <p>1315065458</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer>
+            <p>© 2025 洪兴帮派 版权所有 | 忠义千秋 · 兄弟同行</p>
+        </footer>
+    </div>
+</body>
+
+</html>
